@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, NavbarBrand } from "reactstrap";
 import UserListComponent from "../components/UserListComponent";
+import { v4 as uuidv4 } from "uuid";
 
 class HomePage extends Component {
   constructor(props) {
@@ -8,32 +9,46 @@ class HomePage extends Component {
     this.state = {
       users: [
         {
-          id: 1,
+          id: uuidv4(),
           name: "caner",
           surname: "gecgel",
           username: "canergecgel",
         },
         {
-          id: 1,
+          id: uuidv4(),
           name: "cem",
           surname: "gecgel",
           username: "cemgecgel",
         },
         {
-          id: 3,
+          id: uuidv4(),
           name: "onur",
           surname: "gecgel",
           username: "onurgecgel",
         },
         {
-          id: 4,
+          id: uuidv4(),
           name: "mert",
           surname: "gecgel",
           username: "mertgecgel",
         },
       ],
     };
+    this.addUser = this.addUser.bind(this);
   }
+
+  addUser = (name, surname, username) => {
+    if ((name, surname, username)) {
+      const users = [...this.state.users];
+      users.push({
+        id: uuidv4(),
+        name: name,
+        surname: surname,
+        username: username,
+      });
+      this.setState({ users });
+    }
+  };
 
   render() {
     return (
@@ -43,7 +58,7 @@ class HomePage extends Component {
             <NavbarBrand href="/">react-intro</NavbarBrand>
           </div>
         </Navbar>
-        <UserListComponent users={this.state.users} />
+        <UserListComponent users={this.state.users} addUser={this.addUser} />
       </div>
     );
   }
