@@ -36,6 +36,7 @@ class HomePage extends Component {
       ],
     };
     this.addUser = this.addUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   addUser = (name, surname, username) => {
@@ -54,6 +55,14 @@ class HomePage extends Component {
     }
   };
 
+  deleteUser = (obj) => {
+    const users = this.state.users.filter((user) => {
+      return user.id !== obj.id;
+    });
+    this.setState({ users });
+    toast(` ${obj.name} kullanıcı silindi`);
+  };
+
   render() {
     return (
       <div>
@@ -63,7 +72,11 @@ class HomePage extends Component {
             <NavbarBrand href="/">react-intro</NavbarBrand>
           </div>
         </Navbar>
-        <UserListComponent users={this.state.users} addUser={this.addUser} />
+        <UserListComponent
+          users={this.state.users}
+          addUser={this.addUser}
+          deleteUser={this.deleteUser}
+        />
       </div>
     );
   }
