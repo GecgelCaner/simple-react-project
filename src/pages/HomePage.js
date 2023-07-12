@@ -37,6 +37,7 @@ class HomePage extends Component {
     };
     this.addUser = this.addUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   addUser = (name, surname, username) => {
@@ -63,6 +64,26 @@ class HomePage extends Component {
     toast(` ${obj.name} kullanıcı silindi`);
   };
 
+  editUser = (id, name, surname, username) => {
+    if ((id, name, surname, username)) {
+      const users = [...this.state.users];
+      let updatedUsers = users.map((user) => {
+        if (user.id === id) {
+          user = {
+            id: id,
+            name: name,
+            surname: surname,
+            username: username,
+          };
+        }
+        return user;
+      });
+      this.setState({
+        users: updatedUsers,
+      });
+    }
+  };
+
   render() {
     return (
       <div>
@@ -76,6 +97,7 @@ class HomePage extends Component {
           users={this.state.users}
           addUser={this.addUser}
           deleteUser={this.deleteUser}
+          editUser={this.editUser}
         />
       </div>
     );

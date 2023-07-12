@@ -30,16 +30,37 @@ export default class FormComponent extends Component {
     );
     this.props.hide();
   }
+
+  onUpdate() {
+    this.props.editUser(
+      this.state.id,
+      this.state.name,
+      this.state.surname,
+      this.state.username
+    );
+    this.props.hide();
+  }
+
+  componentDidMount() {
+    this.setState({
+      id: this.props.user.id,
+      name: this.props.user.name,
+      surname: this.props.user.surname,
+      username: this.props.user.username,
+    });
+  }
+
   render() {
     return (
       <div>
         <Modal fade={false} isOpen={this.props.visible}>
-          <ModalHeader>Modal title</ModalHeader>
+          <ModalHeader> {this.props.title} </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
                 <Label for="name">Name</Label>
                 <Input
+                  value={this.state.name}
                   onChange={(e) => this.setState({ name: e.target.value })}
                   id="name"
                   name="name"
@@ -50,6 +71,7 @@ export default class FormComponent extends Component {
               <FormGroup>
                 <Label for="surname">Surname</Label>
                 <Input
+                  value={this.state.surname}
                   onChange={(e) => this.setState({ surname: e.target.value })}
                   id="surname"
                   name="surname"
@@ -60,6 +82,7 @@ export default class FormComponent extends Component {
               <FormGroup>
                 <Label for="username">Username</Label>
                 <Input
+                  value={this.state.username}
                   onChange={(e) => this.setState({ username: e.target.value })}
                   id="username"
                   name="username"
@@ -70,9 +93,21 @@ export default class FormComponent extends Component {
             </Form>
           </ModalBody>
           <ModalFooter>
-            <button className="btn btn-success" onClick={() => this.onSubmit()}>
-              Add
-            </button>
+            {this.props.user.id ? (
+              <button
+                className="btn btn-success"
+                onClick={() => this.onUpdate()}
+              >
+                Update
+              </button>
+            ) : (
+              <button
+                className="btn btn-success"
+                onClick={() => this.onSubmit()}
+              >
+                Add
+              </button>
+            )}
             <button
               className="btn btn-danger"
               onClick={() => this.props.hide()}

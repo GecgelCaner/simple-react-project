@@ -7,6 +7,7 @@ export default class UserListComponent extends Component {
     super(props);
     this.state = {
       visible: false,
+      user: {},
     };
     this.hide = this.hide.bind(this);
   }
@@ -15,21 +16,36 @@ export default class UserListComponent extends Component {
     this.setState({ visible: false });
   }
 
+  getElementById(value) {
+    this.setState({
+      user: value,
+      visible: true,
+      title: value.name,
+    });
+  }
+
   render() {
     return (
       <div className="container mt-5">
         <button
           className="btn btn-primary"
-          onClick={() => this.setState({ visible: true })}
+          onClick={() =>
+            this.setState({ user: {}, visible: true, title: "New User" })
+          }
         >
           Add
         </button>
 
-        <FormComponent
-          visible={this.state.visible}
-          hide={this.hide}
-          addUser={this.props.addUser}
-        />
+        {this.state.visible ? (
+          <FormComponent
+            visible={this.state.visible}
+            hide={this.hide}
+            addUser={this.props.addUser}
+            editUser={this.props.editUser}
+            user={this.state.user}
+            title={this.state.title}
+          />
+        ) : null}
 
         {this.props.users.length > 0 ? (
           <Table>
@@ -49,7 +65,12 @@ export default class UserListComponent extends Component {
                   <td> {user.surname} </td>
                   <td> {user.username} </td>
                   <td>
-                    <button className="btn btn-warning">Edit</button>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => this.getElementById(user)}
+                    >
+                      Edit
+                    </button>
                   </td>
                   <td>
                     <button
