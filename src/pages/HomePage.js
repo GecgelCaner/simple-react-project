@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Navbar, NavbarBrand } from "reactstrap";
 import UserListComponent from "../components/UserListComponent";
 import { v4 as uuidv4 } from "uuid";
+import { ToastContainer, toast } from "react-toastify";
 
 class HomePage extends Component {
   constructor(props) {
@@ -47,12 +48,16 @@ class HomePage extends Component {
         username: username,
       });
       this.setState({ users });
+      toast(` ${name} kullanıcı eklendi`);
+    } else {
+      alert("Please fill all fields");
     }
   };
 
   render() {
     return (
       <div>
+        <ToastContainer />
         <Navbar color="light" expand="md" light>
           <div className="container">
             <NavbarBrand href="/">react-intro</NavbarBrand>

@@ -28,6 +28,7 @@ export default class FormComponent extends Component {
       this.state.surname,
       this.state.username
     );
+    this.props.hide();
   }
   render() {
     return (
